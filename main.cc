@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
   size_t bytes_written_to_file = 0;
 
   // Loop, transferring data using splice operations until we
-  // have transffered all of the data to the destination.
+  // have transferred all of the data to the destination.
   while (bytes_written_to_file < src_file_size) {
     // Wait for readability, writeability on the ends of the pipe.
     const int nfds = epoll_wait(EPOLL_FD, events, NUM_EVENTS, -1);
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]) {
         // The write side of the pipe is ready for data.
         const ssize_t xferred =
             splice(SOURCE_FILE, nullptr, PIPE_WRITER, nullptr, ONE_MEG,
-                   SPLICE_F_MOVE | SPLICE_F_NONBLOCK);
+                   SPLICE_F_MOVE | SPLICE_F_NONBLOCK | SPLICE_F_MORE);
 
         // Check for unrecoverable error.
         if ((xferred == -1) && (errno != EAGAIN)) {
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
         // The read size of the pipe is ready for data.
         const ssize_t xferred =
             splice(PIPE_READER, nullptr, DEST_FILE, nullptr, ONE_MEG,
-                   SPLICE_F_MOVE | SPLICE_F_NONBLOCK);
+                   SPLICE_F_MOVE | SPLICE_F_NONBLOCK | SPLICE_F_MORE);
 
         // Check for unrecoverable error.
         if (xferred == -1) {
