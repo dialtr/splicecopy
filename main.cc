@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  // Make the input file nonblocking.
+  // Make the output file nonblocking.
   if (!dest_file->MakeNonblocking()) {
     fprintf(stderr, "%s: while attempting to make file nonblocking.\n",
             strerror_r(errno, errbuf, sizeof(errbuf)));
