@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
     return status;
   }
 
-  // Create automatic objects.
+  // Create FileDescriptor references for the ends of the pipe.
   auto read_pipe = std::make_shared<FileDescriptor>(pipefd[0]);
   auto write_pipe = std::make_shared<FileDescriptor>(pipefd[1]);
 
