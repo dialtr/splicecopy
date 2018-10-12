@@ -1,17 +1,18 @@
-#include "file_descriptor.h"
 #include <errno.h>
 #include <fcntl.h>
-#include <memory>
 #include <poll.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/epoll.h>
 #include <unistd.h>
+#include <memory>
+#include "file_descriptor.h"
 
 int usage() {
-  printf("splicecopy: Copy a file from 'src' to 'dest' using splice().\n"
-         "Usage: splicecopy <src> <dest>\n");
+  printf(
+      "splicecopy: Copy a file from 'src' to 'dest' using splice().\n"
+      "Usage: splicecopy <src> <dest>\n");
   return 0;
 }
 

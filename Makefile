@@ -13,7 +13,7 @@ splicecopy: main.o
 
 .PHONY:
 reformat:
-	clang-format -i *.cc
+	clang-format -style=Google -i *.cc
 
 .cc.o:
 	$(CXX) $(CXXFLAGS) -c $<
