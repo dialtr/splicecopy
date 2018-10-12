@@ -2,14 +2,14 @@ CXX=g++
 CXXFLAGS=-Wall -Werror -std=c++11 -O3
 
 .PHONY:
-all: fastcopy
+all: splicecopy
 
 .PHONY:
 clean:
-	-rm fastcopy *.o
+	-rm -f splicecopy *.o
 
-fastcopy: main.o
-	$(CXX) $(CXXFLAGS) -o fastcopy $^
+splicecopy: main.o
+	$(CXX) $(CXXFLAGS) -o splicecopy $^
 
 .PHONY:
 reformat:

@@ -1,4 +1,4 @@
-fastcopy
+splicecopy
 *.o
 *~
 .*~
