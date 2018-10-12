@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 int usage() {
-  printf("fastcopy: Copy a file from 'src' to 'dest' using zero copy I/O.\n"
+  printf("fastcopy: Copy a file from 'src' to 'dest' using splice().\n"
          "Usage: fastcopy <src> <dest>\n");
   return 0;
 }
