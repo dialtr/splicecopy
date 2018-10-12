@@ -3,6 +3,8 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 // The FileDescriptor class is designed to take ownership of a UN*X file
@@ -28,6 +30,16 @@ class FileDescriptor {
 	// Destructor.
 	~FileDescriptor() {
 		Close();
+	}
+
+	// Get the size of a file referenced by 'fd'.
+	static ssize_t GetFileSize(int fd) {
+		struct stat file_info = {0};
+		const int status = fstat(fd, &file_info);
+		if (status == -1) {
+			return -1;
+		}
+		return file_info.st_size;
 	}
 
 	// Set the blocking mode on the descriptor.
@@ -59,6 +71,12 @@ class FileDescriptor {
 		return (status == 0);
 	}
 
+	// For pipe file descriptors only, set pipe capacity.
+	// Returns size on success. Returns -1 on failure.
+	static int SetPipeCapacity(int fd, int size) {
+		return fcntl(fd, F_SETPIPE_SZ, size);
+	}
+
 	// Close the file referenced by the descriptor.
 	int Close() {
 		if ((!close_) || (fd_ < 0)) {
@@ -88,14 +106,24 @@ class FileDescriptor {
 	// Return file descriptor.
 	int Get() const { return fd_; }
 
+	// Get the size of the file referenced by the descriptor.
+	ssize_t GetFileSize() {
+		return GetFileSize(fd_);
+	}
+
 	// Put the file object referenced by the descriptor into blocking mode.
-	bool SetBlocking() {
+	bool MakeBlocking() {
 		return SetBlockingMode(fd_, true);
 	}
 
 	// Put the file object referenced by the descriptor into nonblocking mode.
-	bool SetNonblocking() {
+	bool MakeNonblocking() {
 		return SetBlockingMode(fd_, false);
+	}
+
+	// Set pipe capacity (member function, delegates to static, above.)
+	int SetPipeCapacity(int size) {
+		return SetPipeCapacity(fd_, size);
 	}
 
  private:
