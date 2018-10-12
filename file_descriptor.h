@@ -11,7 +11,7 @@
 // descriptor (file, socket, etc.) It provides access to the raw descriptor
 // via the Get() function, and allows the caller to take explicit ownership
 // via a call to the Dismiss() function. (Ownership can be restored to the
-// FileDescriptor instance via a call to Dismiss(), passing 'false'.
+// FileDescriptor instance via a call to Dismiss(), passing 'false'.)
 //
 // The class also supports several methods that are common to most, if not
 // all file descriptors (such as setting the nonblocking flag.) These 
